@@ -10,16 +10,18 @@ jobs:
   test:
     strategy:
       matrix:
-        node: ['10.x', '12.x']
+        node: ['16.x']
         os: [ubuntu-latest]
 
     runs-on: ${{ matrix.os }}
 
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node }}
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@buffet-dex'
 
       - run: npm install -g yarn
 
@@ -32,7 +34,9 @@ jobs:
           restore-keys: |
             ${{ matrix.os }}-yarn-
 
-      - run: yarn
-
-      - run: yarn lint
-      - run: yarn test
+      - env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          yarn install --frozen-lockfile
+          yarn lint
+          yarn test
