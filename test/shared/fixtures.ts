@@ -1,17 +1,18 @@
 import { ethers, Wallet, Contract } from 'ethers'
 import { Web3Provider } from '@ethersproject/providers'
-import { deployContract } from 'ethereum-waffle'
+import { waffle } from 'hardhat';
 
 import { expandTo18Decimals } from './utilities'
 
-import BuffetFactory from '@buffet-dex/buffetswap-core/build/BuffetFactory.json'
-import IBuffetPair from '@buffet-dex/buffetswap-core/build/IBuffetPair.json'
+import BuffetFactory from '@buffet-dex/buffetswap-core/artifacts/contracts/BuffetFactory.sol/BuffetFactory.json'
+import IBuffetPair from '@buffet-dex/buffetswap-core/artifacts/contracts/interfaces/IBuffetPair.sol/IBuffetPair.json'
 
-import ERC20 from '../../build/ERC20.json'
-import WETH9 from '../../build/WETH9.json'
-import BuffetRouter from '../../build/BuffetRouter.json'
-import RouterEventEmitter from '../../build/RouterEventEmitter.json'
+import ERC20 from '../../artifacts/contracts/test/ERC20.sol/ERC20.json'
+import WETH9 from '../../artifacts/contracts/test/WETH9.sol/WETH9.json'
+import BuffetRouter from '../../artifacts/contracts/BuffetRouter.sol/BuffetRouter.json'
+import RouterEventEmitter from '../../artifacts/contracts/test/RouterEventEmitter.sol/RouterEventEmitter.json'
 
+const { deployContract } = waffle;
 const overrides = {
   gasLimit: 9999999
 }

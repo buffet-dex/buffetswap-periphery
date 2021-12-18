@@ -1,30 +1,23 @@
 import chai, { expect } from 'chai'
-import { solidity, MockProvider, createFixtureLoader, deployContract } from 'ethereum-waffle'
+import { waffle } from 'hardhat'
 import { ethers, BigNumber, Contract } from 'ethers'
-import IBuffetPair from '@buffet-dex/buffetswap-core/build/IBuffetPair.json'
+import IBuffetPair from '@buffet-dex/buffetswap-core/artifacts/contracts/interfaces/IBuffetPair.sol/IBuffetPair.json'
 
 import { v2Fixture } from './shared/fixtures'
 import { expandTo18Decimals, getApprovalDigest, mineBlock, MINIMUM_LIQUIDITY } from './shared/utilities'
 
-import DeflatingERC20 from '../build/DeflatingERC20.json'
+import DeflatingERC20 from '../artifacts/contracts/test/DeflatingERC20.sol/DeflatingERC20.json'
 import { ecsign } from 'ethereumjs-util'
 
+const { createFixtureLoader, deployContract } = waffle
 const { AddressZero, Zero, MaxUint256 } = ethers.constants
-
-chai.use(solidity)
 
 const overrides = {
   gasLimit: 9999999,
 }
 
 describe('BuffetRouter', () => {
-  const provider = new MockProvider({
-    ganacheOptions: {
-      hardfork: 'istanbul',
-      mnemonic: 'horn horn horn horn horn horn horn horn horn horn horn horn',
-      gasLimit: 9999999,
-    },
-  })
+  const provider = waffle.provider
   const [wallet] = provider.getWallets()
   const loadFixture = createFixtureLoader([wallet], provider)
 
@@ -128,13 +121,7 @@ describe('BuffetRouter', () => {
 })
 
 describe('fee-on-transfer tokens', () => {
-  const provider = new MockProvider({
-    ganacheOptions: {
-      hardfork: 'istanbul',
-      mnemonic: 'horn horn horn horn horn horn horn horn horn horn horn horn',
-      gasLimit: 9999999,
-    },
-  })
+  const provider = waffle.provider
   const [wallet] = provider.getWallets()
   const loadFixture = createFixtureLoader([wallet], provider)
 
@@ -309,13 +296,7 @@ describe('fee-on-transfer tokens', () => {
 })
 
 describe('fee-on-transfer tokens: reloaded', () => {
-  const provider = new MockProvider({
-    ganacheOptions: {
-      hardfork: 'istanbul',
-      mnemonic: 'horn horn horn horn horn horn horn horn horn horn horn horn',
-      gasLimit: 9999999,
-    },
-  })
+  const provider = waffle.provider
   const [wallet] = provider.getWallets()
   const loadFixture = createFixtureLoader([wallet], provider)
 
@@ -380,13 +361,7 @@ describe('fee-on-transfer tokens: reloaded', () => {
 })
 
 describe('BuffetRouter', () => {
-  const provider = new MockProvider({
-    ganacheOptions: {
-      hardfork: 'istanbul',
-      mnemonic: 'horn horn horn horn horn horn horn horn horn horn horn horn',
-      gasLimit: 9999999,
-    },
-  })
+  const provider = waffle.provider
   const [wallet] = provider.getWallets()
   const loadFixture = createFixtureLoader([wallet], provider)
 
@@ -724,7 +699,7 @@ describe('BuffetRouter', () => {
           overrides
         )
         const receipt = await tx.wait()
-        expect(receipt.gasUsed).to.eq(101898)
+        expect(receipt.gasUsed).to.eq(98086)
       }).retries(3)
     })
 
@@ -868,7 +843,7 @@ describe('BuffetRouter', () => {
           }
         )
         const receipt = await tx.wait()
-        expect(receipt.gasUsed).to.eq(138770)
+        expect(receipt.gasUsed).to.eq(101100)
       }).retries(3)
     })
 
