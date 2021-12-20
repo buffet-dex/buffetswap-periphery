@@ -1,6 +1,6 @@
 import { ethers, Wallet, Contract } from 'ethers'
 import { Web3Provider } from '@ethersproject/providers'
-import { waffle } from 'hardhat';
+import { waffle } from 'hardhat'
 
 import { expandTo18Decimals } from './utilities'
 
@@ -12,9 +12,9 @@ import WETH9 from '../../artifacts/contracts/test/WETH9.sol/WETH9.json'
 import BuffetRouter from '../../artifacts/contracts/BuffetRouter.sol/BuffetRouter.json'
 import RouterEventEmitter from '../../artifacts/contracts/test/RouterEventEmitter.sol/RouterEventEmitter.json'
 
-const { deployContract } = waffle;
+const { deployContract } = waffle
 const overrides = {
-  gasLimit: 9999999
+  gasLimit: 9999999,
 }
 
 interface V2Fixture {
@@ -67,6 +67,6 @@ export async function v2Fixture([wallet]: Wallet[], provider: Web3Provider): Pro
     router,
     routerEventEmitter,
     pair,
-    WETHPair
+    WETHPair,
   }
 }

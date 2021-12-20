@@ -20,8 +20,8 @@ function getDomainSeparator(name: string, tokenAddress: string) {
         keccak256(toUtf8Bytes('EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)')),
         keccak256(toUtf8Bytes(name)),
         keccak256(toUtf8Bytes('1')),
-        31337,  // hardhat local network chain id
-        tokenAddress
+        31337, // hardhat local network chain id
+        tokenAddress,
       ]
     )
   )
@@ -51,16 +51,19 @@ export async function getApprovalDigest(
             ['bytes32', 'address', 'address', 'uint256', 'uint256', 'uint256'],
             [PERMIT_TYPEHASH, approve.owner, approve.spender, approve.value, nonce, deadline]
           )
-        )
+        ),
       ]
     )
   )
 }
 
 export function mineBlock(provider: Web3Provider, timestamp: number): Promise<void> {
-  return provider.send('evm_setNextBlockTimestamp', [timestamp]);
+  return provider.send('evm_setNextBlockTimestamp', [timestamp])
 }
 
 export function encodePrice(reserve0: BigNumber, reserve1: BigNumber) {
-  return [reserve1.mul(BigNumber.from(2).pow(112)).div(reserve0), reserve0.mul(BigNumber.from(2).pow(112)).div(reserve1)]
+  return [
+    reserve1.mul(BigNumber.from(2).pow(112)).div(reserve0),
+    reserve0.mul(BigNumber.from(2).pow(112)).div(reserve1),
+  ]
 }
